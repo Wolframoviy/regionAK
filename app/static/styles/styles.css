@@ -5,6 +5,10 @@ a {
     text-decoration: none;
 }
 
+.row {
+    max-width: 100%;
+}
+
 .header {
     padding: 0 30px;
     background: #79E0EE;
@@ -18,18 +22,27 @@ a {
 
 .main {
     background: #98EECC;
+    min-height: 85vh;
 }
 
+.footer {
+    background: black;
+    min-height: 15vh;
+}
+
+/* Main Page */
 .posts {
     padding: 20px;
+    margin-left: 10vh;
 }
 
 .post {
     background: #D0F5BE;
     margin-top: 25px;
+    margin-left: 15px;
     padding: 15px;
     border: 4px double #FBFFDC;
-    border-radius: 20px
+    border-radius: 20px;
 }
 
 .post-title {
@@ -64,4 +77,10 @@ a {
 
 .btn-info:hover {
     background: #98EECC;
+}
+
+/* Login page */
+.login-form {
+    background: #D0F5BE;
+    padding: 15px 30%;
 }

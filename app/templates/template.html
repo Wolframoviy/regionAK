@@ -18,14 +18,19 @@
         <a href="/usernews" class="header-item">Пользовательские новости</a>
         <a href="/void" class="header-item">Бездна</a>
         {% if user %}
-            <a href="/profile" class="header-item">{{ user.nickname }}</a>
+            <a href="/profile" class="header-item">{{ user.username }}</a>
         {% else %}
-            <a href="/login" class="header-item">Вход</a>
-            <a href="/register" class="header-item">Регистрация</a>
+            <div>
+                <a href="/login" class="header-item">Вход</a><br>
+                <a href="/register" class="header-item">Регистрация</a>
+            </div>
         {% endif %}
     </div>
     <div class="main">
         {% block main %}{% endblock %}
+    </div>
+    <div class="footer">
+        <h1 class="text-center">TODO: FOOTER</h1>
     </div>
 </body>
 </html>

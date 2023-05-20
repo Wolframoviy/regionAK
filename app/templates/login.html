@@ -1,0 +1,28 @@
+{% extends "template.html" %}
+
+{% block main %}
+<div class="row align-center-items">
+    <div class="post col"><p><h1>Перед входом на сайт проверьте сертификат и домен на случай фишинга. </h1><p><h1 class="text-end">С уважением, команда РегионАК</h1></div>
+    <div class="col post">
+        <form class="login-form" action="/login" method="post" name="login">
+            <h1 class="text-center">Вход</h1>
+            <div class="mb-3">
+                <label for="email" class="form-label">E-Mail</label>
+                <input name="email" class="form-control" id="email" type="email" placeholder="ivan@ivanov.com" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Пароль</label>
+                <input name="password" class="form-control" id="password" type="password" placeholder="12345678IsBadPassword!" required>
+            </div>
+            <button class="btn btn-primary mb-3" type="submit">Вход</button>
+            {% if get_flashed_messages() %}
+                {% for i in get_flashed_messages() %}
+                    <div class="alert alert-danger"  role="alert">
+                        {{ i }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </form>
+    </div>
+</div>
+{% endblock %}
