@@ -6,7 +6,10 @@ from app import app
 @app.route("/")
 @app.route("/index")
 def index():
-    user = dbreq(f"SELECT * FROM users WHERE id = '{session.get('USER_ID')}'")[0]
+    user = None
+    if session.get("USER_ID"):
+        user = dbreq(f"SELECT * FROM users WHERE id = '{session.get('USER_ID')}'")[0]
+
     posts = [{"author": {"name": "Aboba1", "id": 34},
               "title": "Lorem ipsum dolor",
               "content": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem earum enim excepturi "
@@ -87,6 +90,12 @@ def register():
         return redirect("/")
 
     return render_template("register.html", title="Регистрация")
+
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect("/")
 
 
 @app.route("/post<int:post_id>/")
