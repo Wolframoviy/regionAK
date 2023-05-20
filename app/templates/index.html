@@ -15,7 +15,7 @@
         <div class="post-source">Источник: {{ post.source }}</div>
         {% endif %}
         <div class="post-info">
-            <div class="post-author">Автор: <a href="/user{{ post.author.id }}">{{ post.author.name }}</a></div>
+            <div class="post-author">Автор: <a href="/user{{ post.author_id }}">{{ post.author }}</a></div>
             <div class="post-date">{{ post.date }}</div>
             <div class="post-href"><a href="/post{{ post.id }}/">
                 <button class="btn btn-info">Подробнее</button>
