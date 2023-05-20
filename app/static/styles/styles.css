@@ -1,0 +1,67 @@
+/* Main Pallete: https://colorhunt.co/palette/79e0ee98eeccd0f5befbffdc */
+
+a {
+    color: black;
+    text-decoration: none;
+}
+
+.header {
+    padding: 0 30px;
+    background: #79E0EE;
+    border-bottom: 4px solid white;
+
+}
+
+.header-item {
+    font-size: 20px;
+}
+
+.main {
+    background: #98EECC;
+}
+
+.posts {
+    padding: 20px;
+}
+
+.post {
+    background: #D0F5BE;
+    margin-top: 25px;
+    padding: 15px;
+    border: 4px double #FBFFDC;
+    border-radius: 20px
+}
+
+.post-title {
+    font-size: 30px;
+}
+
+.post-content {
+    font-size: 20px;
+}
+
+.post-source {
+    font-size: 15px;
+    color: #9BA4B5;
+}
+
+.post-info {
+    text-align: right;
+}
+
+.post-author, .post-date {
+    font-size: 15px;
+}
+
+.post-date {
+    color: #9BA4B5;
+}
+
+.btn-info {
+    background: #FBFFDC;
+    margin-top: 10px;
+}
+
+.btn-info:hover {
+    background: #98EECC;
+}
