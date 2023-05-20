@@ -1,7 +1,7 @@
 from cs50 import SQL
 from hashlib import sha256
 
-db = SQL("sqlite:///app/database.db")
+db = SQL("sqlite:///venv/database.db")
 
 
 def dbreq(req):
