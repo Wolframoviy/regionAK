@@ -1,0 +1,24 @@
+{% extends "template.html" %}
+
+{% block main %}
+<div class="posts">
+    <div class="container post">
+            <div class="post-title">{{ post.title }}</div>
+            <div class="post-content">{{ post.content }}</div>
+            {% if post.image %}
+                <img src="/static/images/posts/{{ post.image }}" alt="Нам не удалось загрузить изображение. :(">
+            {% endif %}
+            {% if post.source %}
+            <div class="post-source">Источник: {{ post.source }}</div>
+            {% endif %}
+            <div class="post-info">
+                <div class="post-author">Автор: <a href="/user{{ post.author_id }}">{{ post.author }}</a></div>
+                <div class="post-date">{{ post.pdate|unixtostring }}</div>
+                <div class="post-href"><a href="/post{{ post.id }}/">
+                    <button class="btn btn-info">Подробнее</button>
+                </a></div>
+            </div>
+    </div>
+</div>
+{% endblock %}
+
