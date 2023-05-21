@@ -1,0 +1,42 @@
+{% extends "template.html" %}
+
+{% block main %}
+<div class="row align-center-items">
+    <div class="post col login-info"><p>Советы для написания хорошего поста:
+                          <p>1. Пишите объективно. У нас новости, а не пропоганда, так что пишем только проверенное.</p>
+                          <p>2. Пишите по сути. Не нужно заливать пост кубометрами H2O.</p>
+                          <p>3. Оскорбляйте людей. Серьёзно. Никто не любит, когда его оскорбляют.</p>
+                          <p>4. Соблюдайте правила сервиса и законодательство страны, в которой проживаете.</p>
+                          <p class="text-end">С уважением, команда РегионАК.</p></div>
+    <div class="col post">
+        <form class="login-form" action="/new_post" method="post" name="new_post" enctype="multipart/form-data">
+            <h1 class="text-center">Создание нового поста</h1>
+            <div class="mb-3">
+                <label for="title" class="form-label">Заголовок*</label>
+                <input name="title" class="form-control title-input" id="title" type="text" placeholder="Уровень инфляции в Лихтенштейне вырос на 2.9 % в марте 2023." required>
+            </div>
+            <div class="mb-3">
+                <label for="content" class="form-label">Контент*</label>
+                <textarea name="content" class="form-control content-input" id="content" placeholder="Уровень инфляции в Лихтенштейне вырос на 2.9 % в марте 2023 по сравнению с этим же месяцем прошлого года. Максимальный уровень достигал 6.53 %, а минимальный -1.4 %." required></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="source" class="form-label">Источник</label>
+                <input name="source" class="form-control" id="source" type="text" placeholder="Национальная администрация княжества.">
+            </div>
+            <div class="mb-3">
+                <label for="image" class="form-label">Изображение</label>
+                <input name="image" class="form-control" id="image" type="file" accept="image/">
+            </div>
+            <label for="submit">Поля отмеченные * - обязательные к заполнению.</label>
+            <button id="submit" class="btn btn-primary mb-3" type="submit">Опубликовать!</button>
+            {% if get_flashed_messages() %}
+                {% for i in get_flashed_messages() %}
+                    <div class="alert alert-danger"  role="alert">
+                        {{ i }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </form>
+    </div>
+</div>
+{% endblock %}

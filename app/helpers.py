@@ -3,6 +3,8 @@ from cs50 import SQL
 from functools import wraps
 from hashlib import sha256
 from datetime import datetime
+
+import config
 from app import app
 
 try:
@@ -15,23 +17,23 @@ def dbreq(req):
     return db.execute(req)
 
 
-def tohash(inp):
+def to_hash(inp):
     byte = bytes(inp, "UTF-8")
     res = sha256(byte).hexdigest()
     return res
 
 
-def checkpasshash(chash, passw):
-    passhash = tohash(passw)
+def check_passhash(chash, passw):
+    passhash = to_hash(passw)
     return chash == passhash
 
 
 @app.template_filter("unixtostring")
-def unixtostring(ut):
+def unix_to_string(ut):
     return datetime.utcfromtimestamp(ut).strftime('%Y-%m-%d %H:%M')
 
 
-def getuser(uid):
+def get_user(uid):
     users = dbreq(f"SELECT * FROM users WHERE id = {uid}")
     if len(users) == 0:
         return {"id": 0, "username": "Пользователь не найден", "email": "not@found.sorry", "passwordhash": "абоба", "image": "defauld.png"}
@@ -46,3 +48,8 @@ def login_required(f):
             return redirect("/login")
         return f(*args, **kwargs)
     return decorated_function
+
+
+def allowed_file(filename):
+    return '.' in filename and \
+        filename.rsplit('.', 1)[1].lower() in config.ALLOWED_EXTENSIONS
