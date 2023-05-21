@@ -1,5 +1,7 @@
 from cs50 import SQL
 from hashlib import sha256
+from datetime import datetime
+from app import app
 
 db = SQL("sqlite:///venv/database.db")
 
@@ -17,3 +19,8 @@ def tohash(inp):
 def checkpasshash(chash, passw):
     passhash = tohash(passw)
     return chash == passhash
+
+
+@app.template_filter("unixtostring")
+def unixtostring(ut):
+    return datetime.utcfromtimestamp(ut).strftime('%Y-%m-%d %H:%M')

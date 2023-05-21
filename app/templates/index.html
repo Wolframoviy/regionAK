@@ -16,7 +16,7 @@
         {% endif %}
         <div class="post-info">
             <div class="post-author">Автор: <a href="/user{{ post.author_id }}">{{ post.author }}</a></div>
-            <div class="post-date">{{ post.date }}</div>
+            <div class="post-date">{{ post.pdate|unixtostring }}</div>
             <div class="post-href"><a href="/post{{ post.id }}/">
                 <button class="btn btn-info">Подробнее</button>
             </a></div>
