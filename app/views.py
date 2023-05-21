@@ -65,20 +65,22 @@ def register():
     return render_template("register.html", title="Регистрация")
 
 
-@app.route("/profile")
-def profile():
-    return redirect(f"/user{session.get('USER_ID')}")
-
-
 @app.route("/logout")
 def logout():
     session.clear()
     return redirect("/")
 
 
+@app.route("/profile")
+def profile():
+    return redirect(f"/user{session.get('USER_ID')}")
+
+
 @app.route("/post<int:post_id>/")
 def post(post_id):
-    return f"POST {post_id}\nTODO"
+    post_info = dbreq(f"SELECT posts.*, users.username AS author FROM posts, users WHERE posts.id = {post_id}")[0]
+
+    return render_template("post.html", post=post_info, title=post_info["title"], user=user)
 
 
 @app.route("/user<int:user_id>/")
