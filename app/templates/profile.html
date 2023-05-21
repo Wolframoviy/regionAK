@@ -3,14 +3,36 @@
 {% block main %}
 <div class="row align-center-items">
     <div class="col post">
-        <img class="profile-image" src="/static/images/users/{{ tuser.image }}" alt="Нам не удалось загрузить изображение. :(">
-        <div class="profile-info">
-            <p>Имя пользователя: {{ tuser.username }}</p>
-            {% if tuser.realname %}
-                <p>ФИО: {{ tuser.realname }}</p>
-            {% endif %}
+        <div class="profile">
+            <img class="profile-image" src="/static/images/users/{{ tuser.image }}" alt="Нам не удалось загрузить изображение. :(">
+            <div class="profile-info">
+                <p>Имя пользователя: {{ tuser.username }}</p>
+                {% if tuser.realname %}
+                    <p>ФИО: {{ tuser.realname }}</p>
+                {% endif %}
+                <p>Статус редактора: {{ ("отсуствует", "присутствует", "присутсвует+")[tuser.rank] }}</p>
+            </div>
         </div>
     </div>
-    <div class="col"></div>
+    <div class="col posts">
+        {% for post in posts %}
+            <div class="container post">
+                <div class="post-title">{{ post.title }}</div>
+                <div class="post-content">{{ post.content|truncate(400) }}</div>
+                {% if post.image %}
+                    <img class="post-image" src="/static/images/posts/{{ post.image }}" alt="Нам не удалось загрузить изображение. :(">
+                {% endif %}
+                {% if post.source %}
+                <div class="post-source">Источник: {{ post.source }}</div>
+                {% endif %}
+                <div class="post-info">
+                    <div class="post-date">{{ post.pdate|unixtostring }}</div>
+                    <div class="post-href"><a href="/post{{ post.id }}/">
+                        <button class="btn btn-info">Подробнее</button>
+                    </a></div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}

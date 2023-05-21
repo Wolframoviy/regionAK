@@ -92,6 +92,10 @@ a {
 
 
 /* Profile Page */
+.profile {
+    margin-left: 40%;
+}
+
 .profile-image {
     height: 250px;
     width: 250px;
