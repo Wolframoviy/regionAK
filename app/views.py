@@ -17,6 +17,8 @@ def index():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    session.clear()
+
     if request.method == "POST":
         if not (request.form.get("email") and request.form.get("password")):
             flash("Все поля должны быть заполнены!")
@@ -41,6 +43,8 @@ def login():
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
+    session.clear()
+
     if request.method == "POST":
         if not (request.form.get("email") and request.form.get("password") and request.form.get("username")):
             flash("Все поля должны быть заполнены!")
@@ -56,7 +60,7 @@ def register():
             flash("Данный E-Mail уже используется!")
             return render_template("register.html", title="Регистрация")
 
-        dbreq(f"INSERT INTO users (email, username, passwordhash) VALUES ('{request.form.get('email')}', '{request.form.get('username')}', '{tohash(request.form.get('password'))}')")
+        dbreq(f"INSERT INTO users (email, username, passwordhash, image) VALUES ('{request.form.get('email')}', '{request.form.get('username')}', '{tohash(request.form.get('password'))}', 'default.png')")
         user_info = dbreq(f"SELECT * FROM users WHERE email = '{request.form.get('email')}'")[0]
 
         session["USER_ID"] = user_info["id"]
@@ -80,9 +84,12 @@ def profile():
 def post(post_id):
     post_info = dbreq(f"SELECT posts.*, users.username AS author FROM posts, users WHERE posts.id = {post_id}")[0]
 
-    return render_template("post.html", post=post_info, title=post_info["title"], user=user)
+    return render_template("post.html", post=post_info, title=post_info["title"], user=getuser(session.get("USER_ID")))
 
 
 @app.route("/user<int:user_id>/")
 def user(user_id):
-    return f"USER {user_id}\nTODO"
+    user_info = getuser(user_id)
+    user_posts = dbreq(f"SELECT * FROM posts WHERE author_id = {user_id}")
+
+    return render_template("profile.html", title=user_info["username"], user=getuser(session.get("USER_ID")),tuser=user_info, posts=user_posts)

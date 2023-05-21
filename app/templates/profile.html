@@ -1,0 +1,16 @@
+{% extends "template.html" %}
+
+{% block main %}
+<div class="row align-center-items">
+    <div class="col post">
+        <img class="profile-image" src="/static/images/users/{{ tuser.image }}" alt="Нам не удалось загрузить изображение. :(">
+        <div class="profile-info">
+            <p>Имя пользователя: {{ tuser.username }}</p>
+            {% if tuser.realname %}
+                <p>ФИО: {{ tuser.realname }}</p>
+            {% endif %}
+        </div>
+    </div>
+    <div class="col"></div>
+</div>
+{% endblock %}
