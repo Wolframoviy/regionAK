@@ -129,5 +129,3 @@ def new_post():
 
     return render_template("new_post.html", user=user, title="Создание поста")
 
-# TODO:
-# Сделать доступ к добавлению поста по рангу
