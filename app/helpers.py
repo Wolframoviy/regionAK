@@ -34,9 +34,14 @@ def unix_to_string(ut):
 
 
 def get_user(uid):
+    if uid is None:
+        return {"id": None, "username": "Пользователь не найден", "email": "not@found.sorry", "passwordhash": "абоба",
+                "image": "defauld.png"}
+
     users = dbreq(f"SELECT * FROM users WHERE id = {uid}")
     if len(users) == 0:
-        return {"id": 0, "username": "Пользователь не найден", "email": "not@found.sorry", "passwordhash": "абоба", "image": "defauld.png"}
+        return {"id": None, "username": "Пользователь не найден", "email": "not@found.sorry", "passwordhash": "абоба",
+                "image": "defauld.png"}
 
     return users[0]
 
@@ -47,7 +52,20 @@ def login_required(f):
         if session.get("USER_ID") is None:
             return redirect("/login")
         return f(*args, **kwargs)
+
     return decorated_function
+
+
+def rank_required(rank=1):
+    def decorator(f):
+        @wraps(f)
+        def decorated_function(*args, **kwargs):
+            urank = dbreq(f"SELECT rank FROM users WHERE id = {session.get('USER_ID')}")[0]["rank"]
+            if urank >= rank:
+                return f(*args, **kwargs)
+            return redirect("/")  # TODO: Create error-page.
+        return decorated_function
+    return decorator
 
 
 def allowed_file(filename):
