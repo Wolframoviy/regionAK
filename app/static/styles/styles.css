@@ -84,8 +84,29 @@ a {
     background: #98EECC;
 }
 
-/* Login page */
+/* Login Page */
 .login-form {
     background: #D0F5BE;
     padding: 15px 30%;
+}
+
+.login-info {
+    font-size: 35px;
+}
+
+
+/* Profile Page */
+.profile {
+    margin-left: 40%;
+}
+
+.profile-image {
+    height: 250px;
+    width: 250px;
+}
+
+/* Editor Page */
+.content-input {
+    height: 300px;
+    max-height: 500px;
 }
