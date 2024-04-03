@@ -9,13 +9,13 @@ import os
 @app.route("/")
 @app.route("/index")
 def index():
-    user = None
+    user_info = None
     if session.get("USER_ID"):
-        user = dbreq(f"SELECT * FROM users WHERE id = '{session.get('USER_ID')}'")[0]
+        user_info = dbreq(f"SELECT * FROM users WHERE id = '{session.get('USER_ID')}'")[0]
 
     posts_info = dbreq("SELECT posts.*, users.username AS author FROM posts, users WHERE 'posts'.author_id = users.id ORDER BY 'posts'.pdate LIMIT 15")
 
-    return render_template("index.html", posts=posts_info, title="Новости", user=user)
+    return render_template("index.html", posts=posts_info, title="Новости", user=user_info)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -63,7 +63,7 @@ def register():
             flash("Данный E-Mail уже используется!")
             return render_template("register.html", title="Регистрация")
 
-        dbreq(f"INSERT INTO users (email, username, passwordhash, image) VALUES ('{request.form.get('email')}', '{request.form.get('username')}', '{tohash(request.form.get('password'))}', 'default.png')")
+        dbreq(f"INSERT INTO users (email, username, passwordhash, image) VALUES ('{request.form.get('email')}', '{request.form.get('username')}', '{to_hash(request.form.get('password'))}', 'default.png')")
         user_info = dbreq(f"SELECT * FROM users WHERE email = '{request.form.get('email')}'")[0]
 
         session["USER_ID"] = user_info["id"]
@@ -102,12 +102,12 @@ def user(user_id):
 @rank_required(rank=1)
 @login_required
 def new_post():
-    user = get_user(session.get("USER_ID"))
+    user_info = get_user(session.get("USER_ID"))
 
     if request.method == "POST":
         if not (request.form.get("title") or request.form.get("content")):
             flash("Не заполнены обязательные поля!")
-            return render_template("post.html", user=user, title="Создание поста")
+            return render_template("post.html", user=user_info, title="Создание поста")
 
         file = None
         source = None
@@ -124,8 +124,7 @@ def new_post():
         source = f"'{request.form.get('source')}'" if request.form.get("source") is not None else "NULL"
 
         dbreq(f"INSERT INTO posts (title, content, image, author_id, pdate, source) VALUES ('{request.form.get('title')}', '{request.form.get('content')}', {filename}, {session.get('USER_ID')}, {now}, {source})")
-        post_id = dbreq(f"SELECT id FROM posts WHERE author_id = {user['id']} AND pdate = {now}")[0]["id"]
+        post_id = dbreq(f"SELECT id FROM posts WHERE author_id = {user_info['id']} AND pdate = {now}")[0]["id"]
         return redirect(f"/post{post_id}")
 
-    return render_template("new_post.html", user=user, title="Создание поста")
-
+    return render_template("new_post.html", user=user_info, title="Создание поста")
